@@ -1,0 +1,84 @@
+<!-- views/index.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendário de Módulos</title>
+    <style>
+        .flash-message {
+            color: green;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Calendário de Módulos</h1>
+
+    <% for (const message of flashMessages) { %>
+        <p class="flash-message">
+            <%= message %>
+        </p>
+        <% } %>
+
+            <h2>Adicionar Módulo</h2>
+            <form action="/adicionar_modulos" method="post">
+                <label for="turmaNome">Nome da Turma:</label>
+                <input type="text" id="turmaNome" name="turmaNome" required>
+                <br>
+                <label for="moduloNome1">Nome do Módulo 1:</label>
+                <input type="text" id="moduloNome1" name="modulos[0][moduloNome]" required>
+                <br>
+                <label for="moduloNome2">Nome do Módulo 2:</label>
+                <input type="text" id="moduloNome2" name="modulos[1][moduloNome]" required>
+                <br>
+                <label for="moduloNome3">Nome do Módulo 3:</label>
+                <input type="text" id="moduloNome3" name="modulos[2][moduloNome]" required>
+                <br>
+                <label for="moduloNome">Nome do Módulo 4:</label>
+                <input type="text" id="moduloNome4" name="modulos[3][moduloNome]" required>
+                <br>
+                <label for="dataInicio">Data de Início da Turma:</label>
+                <input type="text" id="dataInicio1" name="modulos[0][dataInicio]" required>
+                <br>
+                <label for="semanas1">Qnt. de Semanas - Módulo 1:</label>
+                <input type="number" id="semanas1" name="modulos[0][semanas]" required>
+                <br>
+                <label for="semanas2">Qnt. de Semanas - Módulo 2:</label>
+                <input type="number" id="semanas2" name="modulos[1][semanas]" required>
+                <br>
+                <label for="semanas3">Qnt. de Semanas - Módulo 3:</label>
+                <input type="number" id="semanas3" name="modulos[2][semanas]" required>
+                <br>
+                <label for="semanas4">Qnt. de Semanas - Módulo 4:</label>
+                <input type="number" id="semanas4" name="modulos[3][semanas]" required>
+                <br>
+                <input type="submit" value="Adicionar Módulos">
+            </form>
+
+            <% for (const [turma, modulos] of Object.entries(datasTurmas)) { %>
+                <h2>Turma <%= turma %>
+                </h2>
+                <ul>
+                    <% for (const [modulo, detalhes] of Object.entries(modulos)) { %>
+                        <li>
+                            <strong>
+                                <%= modulo %>
+                            </strong>
+                            <br>
+                            <span>Data de Início: <%= detalhes.dataInicio ? detalhes.dataInicio.toFormat('dd/MM/yyyy')
+                                    : 'N/A' %></span>
+                            <br>
+                            <span>Data de Término: <%= detalhes.dataTermino ?
+                                    detalhes.dataTermino.toFormat('dd/MM/yyyy') : 'N/A' %></span>
+                        </li>
+                        <% } %>
+                </ul>
+                <% } %>
+</body>
+
+</html>
